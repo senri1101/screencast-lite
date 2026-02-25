@@ -30,21 +30,44 @@ else
     echo "ffmpeg is already installed."
 fi
 
-WORKFLOW_NAME="screen_recording_auto_compress.workflow"
-DIR=$(cd "$(dirname "$0")" && pwd)
-
-if [ -d "$DIR/$WORKFLOW_NAME" ]; then
-    echo "Opening the workflow installer..."
-    open "$DIR/$WORKFLOW_NAME"
-    echo ""
-    echo "When macOS asks, click Install to enable the folder action."
-    echo "Set the watched folder to your Desktop."
-else
-    echo "Error: $WORKFLOW_NAME was not found."
-    echo "Place setup.command and the workflow bundle in the same folder, then try again."
+if ! command -v osacompile >/dev/null 2>&1; then
+    echo "Error: osacompile was not found on this macOS installation."
     exit 1
 fi
 
+SOURCE_DIR=$(cd "$(dirname "$0")" && pwd)
+SCRIPT_SOURCE="$SOURCE_DIR/folder_action/screen_recording_auto_compress.js"
+WORKER_SCRIPT_SOURCE="$SOURCE_DIR/folder_action/screen_recording_auto_compress.sh"
+TARGET_DIR="$HOME/Library/Scripts/Folder Action Scripts"
+TARGET_SCPT="$TARGET_DIR/screen_recording_auto_compress.scpt"
+TARGET_WORKER="$TARGET_DIR/screen_recording_auto_compress.sh"
+
+if [ ! -f "$SCRIPT_SOURCE" ] || [ ! -f "$WORKER_SCRIPT_SOURCE" ]; then
+    echo "Error: folder action sources were not found."
+    echo "Expected files:"
+    echo "  - $SCRIPT_SOURCE"
+    echo "  - $WORKER_SCRIPT_SOURCE"
+    exit 1
+fi
+
+mkdir -p "$TARGET_DIR"
+cp "$WORKER_SCRIPT_SOURCE" "$TARGET_WORKER"
+chmod +x "$TARGET_WORKER"
+osacompile -l JavaScript -o "$TARGET_SCPT" "$SCRIPT_SOURCE"
+
+echo ""
+echo "Installed folder action files:"
+echo "  - $TARGET_SCPT"
+echo "  - $TARGET_WORKER"
+echo ""
+echo "Opening Folder Actions Setup..."
+open -a "Folder Actions Setup"
+
+echo ""
+echo "Next steps in Folder Actions Setup:"
+echo "  1) Enable Folder Actions."
+echo "  2) Add your Desktop folder in the left panel."
+echo "  3) Click + on the right panel and choose screen_recording_auto_compress.scpt."
 echo ""
 echo "========================================"
 echo "Setup finished. You can close this window."

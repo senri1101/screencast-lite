@@ -2,11 +2,11 @@
 
 Automatically compress new macOS screen recordings (`.mov`) into smaller H.265 (`.mp4`) files.
 
-This project is built for non-engineering users: run one setup script, install one Automator folder action, and your Desktop recordings are compressed automatically.
+This project is built for non-engineering users: run one setup script, add one Folder Action script, and your Desktop recordings are compressed automatically.
 
 ## What it does
 
-- Watches your Desktop using an Automator Folder Action.
+- Watches your Desktop through macOS Folder Actions.
 - Detects screen recording files that start with:
   - `Screen Recording`
   - The Japanese default macOS prefix (handled internally via Unicode escape sequence).
@@ -29,8 +29,10 @@ This project is built for non-engineering users: run one setup script, install o
 1. Download this repository.
 2. Double-click `setup.command`.
 3. Follow on-screen prompts.
-4. When Automator opens, click **Install**.
-5. Set the watched folder to **Desktop**.
+4. Folder Actions Setup will open automatically.
+5. Enable Folder Actions.
+6. Add your Desktop folder in the left panel.
+7. Add `screen_recording_auto_compress.scpt` in the right panel.
 
 ## Daily usage
 
@@ -50,7 +52,8 @@ Run `setup.command` again. It installs Homebrew and ffmpeg if missing.
 - Confirm the file extension is `.mov`.
 - Confirm the filename starts with `Screen Recording` (or Japanese default prefix).
 - Confirm the file was saved to Desktop.
-- Confirm Folder Action is installed and enabled.
+- Confirm Folder Actions are enabled.
+- Confirm `screen_recording_auto_compress.scpt` is attached to Desktop in Folder Actions Setup.
 
 ### Original file was not deleted
 
@@ -58,14 +61,17 @@ This is expected when conversion fails. The original file is deleted only after 
 
 ## Uninstall
 
-1. Remove or disable the Folder Action in macOS Folder Actions Setup.
-2. Delete this repository folder.
-3. (Optional) Keep or uninstall `ffmpeg` and Homebrew manually.
+1. Open Folder Actions Setup.
+2. Remove `screen_recording_auto_compress.scpt` from Desktop actions.
+3. Delete `~/Library/Scripts/Folder Action Scripts/screen_recording_auto_compress.scpt`.
+4. Delete `~/Library/Scripts/Folder Action Scripts/screen_recording_auto_compress.sh`.
+5. Delete this repository folder.
 
 ## Repository layout
 
-- `setup.command`: one-click dependency + workflow installer
-- `screen_recording_auto_compress.workflow/Contents/document.wflow`: Automator workflow definition
+- `setup.command`: one-click dependency + folder action installer
+- `folder_action/screen_recording_auto_compress.js`: folder action entry script source
+- `folder_action/screen_recording_auto_compress.sh`: compression worker script
 - `docs/`: landing page (for GitHub Pages)
 
 ## License
