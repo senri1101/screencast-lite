@@ -70,7 +70,7 @@
         <ol class="steps">
           <li>Save a new macOS screen recording (`.mov`) to Desktop.</li>
           <li>LaunchAgent receives Desktop file events via `WatchPaths`.</li>
-          <li>`ffmpeg` creates `<name>_small.mp4` with `libx265` + `crf 28`.</li>
+          <li>`ffmpeg` creates `screen_recording_YYYYMMDD_HHMMSS_small.mp4` with `libx265` + `hvc1`.</li>
           <li>Original `.mov` moves to Trash only after a successful conversion.</li>
         </ol>
       </section>
@@ -119,6 +119,12 @@
             <summary>Where can I report issues?</summary>
             <p>
               Use the GitHub repository issue tracker.
+            </p>
+          </details>
+          <details>
+            <summary>Will QuickTime open the generated MP4 files?</summary>
+            <p>
+              Yes. Output is encoded with `yuv420p` and tagged as `hvc1` for QuickTime compatibility.
             </p>
           </details>
           <details>

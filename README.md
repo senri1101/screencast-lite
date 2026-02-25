@@ -14,9 +14,11 @@ This project is built for non-engineering users: run one setup script, then use 
 - Waits 5 seconds to avoid converting an in-progress recording.
 - Compresses with `ffmpeg` using:
   - codec: `libx265`
+  - compatibility: `-pix_fmt yuv420p` + `-tag:v hvc1`
   - quality: `-crf 28`
   - preset: `-preset slower`
-- Creates `<original_name>_small.mp4` in the same folder.
+- Creates snake_case output names in the same folder, for example:
+  - `screen_recording_20260225_164553_small.mp4`
 - Moves the original `.mov` file to Trash **only if conversion succeeds**.
 - Writes logs to `~/.screencast-lite/worker.log`.
 - Writes scanner logs to `~/.screencast-lite/scanner.log`.
@@ -43,7 +45,7 @@ If you updated this repository after a previous install, run `setup.command` aga
 1. Record your screen using macOS built-in recording.
 2. Save the file to Desktop.
 3. Wait for automatic compression.
-4. Use the generated `_small.mp4` file.
+4. Use the generated snake_case `_small.mp4` file.
 
 ## Troubleshooting
 
@@ -79,6 +81,12 @@ tail -n 100 "$HOME/.screencast-lite/launchd.err.log"
 ### Original file was not deleted
 
 This is expected when conversion fails. The original file is deleted only after a successful conversion.
+
+### QuickTime cannot open an existing output
+
+- Re-run `setup.command` to install the latest worker script.
+- Re-convert from the original `.mov` file.
+- New outputs are encoded with `yuv420p` + `hvc1` for better QuickTime compatibility.
 
 ## Uninstall
 
