@@ -55,7 +55,8 @@
       </h1>
       <p class="lead">
         screencast-lite uses a LaunchAgent, compresses new Desktop recordings to
-        H.265, and keeps only the lightweight output when conversion succeeds.
+        H.265, and includes a Folder Action compatibility mode for stricter
+        macOS permission setups.
       </p>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://github.com/senri1101/screencast-lite">View GitHub</a>
@@ -118,6 +119,13 @@
             <summary>Where can I report issues?</summary>
             <p>
               Use the GitHub repository issue tracker.
+            </p>
+          </details>
+          <details>
+            <summary>What if LaunchAgent mode does not detect Desktop files?</summary>
+            <p>
+              Attach `screen_recording_auto_compress.scpt` to Desktop in Folder
+              Actions Setup.
             </p>
           </details>
         </div>
