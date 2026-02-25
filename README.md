@@ -6,7 +6,7 @@ This project is built for non-engineering users: run one setup script, and a Lau
 
 ## What it does
 
-- Watches your Desktop via `launchd` (`LaunchAgent` with `WatchPaths`).
+- Watches your Desktop via `launchd` (`LaunchAgent` with `WatchPaths` plus a 20-second fallback interval).
 - Detects screen recording files by:
   - extension: `.mov`
   - filename prefix: `Screen Recording` or Japanese default prefix (handled internally via Unicode escape sequence)
@@ -18,6 +18,7 @@ This project is built for non-engineering users: run one setup script, and a Lau
 - Creates `<original_name>_small.mp4` in the same folder.
 - Moves the original `.mov` file to Trash **only if conversion succeeds**.
 - Writes logs to `~/.screencast-lite/worker.log`.
+- Writes scanner logs to `~/.screencast-lite/scanner.log`.
 
 ## Requirements
 
@@ -62,6 +63,8 @@ launchctl print "gui/$UID/io.github.senri1101.screencast-lite"
 
 ```bash
 tail -n 100 "$HOME/.screencast-lite/worker.log"
+tail -n 100 "$HOME/.screencast-lite/scanner.log"
+tail -n 100 "$HOME/.screencast-lite/launchd.err.log"
 ```
 
 ### Original file was not deleted

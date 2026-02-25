@@ -25,6 +25,9 @@
   <key>RunAtLoad</key>
   <true/>
 
+  <key>StartInterval</key>
+  <integer>20</integer>
+
   <key>StandardOutPath</key>
   <string>__LOG_PATH__</string>
 

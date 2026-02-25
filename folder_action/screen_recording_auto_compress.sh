@@ -2,7 +2,7 @@
 
 set -u
 
-export PATH=/opt/homebrew/bin:/usr/local/bin:$PATH
+export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 LOG_DIR="$HOME/.screencast-lite"
 if ! mkdir -p "$LOG_DIR" >/dev/null 2>&1; then
   LOG_DIR="${TMPDIR:-/tmp}/screencast-lite"
@@ -25,8 +25,8 @@ jp_prefix=$'\xE7\x94\xBB\xE9\x9D\xA2\xE5\x8F\x8E\xE9\x8C\xB2'
 for f in "$@"; do
   [ -f "$f" ] || continue
 
-  filename=$(basename "$f")
-  dir=$(dirname "$f")
+  filename="${f##*/}"
+  dir="${f%/*}"
   filename_noext="${filename%.*}"
 
   case "$filename" in
@@ -39,7 +39,7 @@ for f in "$@"; do
     continue
   fi
 
-  sleep 5
+  /bin/sleep 5
   output="$dir/${filename_noext}_small.mp4"
 
   if [ -e "$output" ]; then
@@ -54,7 +54,7 @@ for f in "$@"; do
     mkdir -p "$trash_dir" >/dev/null 2>&1 || true
     trash_target="$trash_dir/$filename"
     if [ -e "$trash_target" ]; then
-      stamp=$(date '+%Y%m%d_%H%M%S')
+      stamp=$(/bin/date '+%Y%m%d_%H%M%S')
       trash_target="$trash_dir/${filename_noext}_${stamp}.mov"
     fi
 
