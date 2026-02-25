@@ -54,7 +54,7 @@
         <span>without extra clicks.</span>
       </h1>
       <p class="lead">
-        screencast-lite uses Folder Actions, compresses new Desktop recordings to
+        screencast-lite uses a LaunchAgent, compresses new Desktop recordings to
         H.265, and keeps only the lightweight output when conversion succeeds.
       </p>
       <div class="cta-row">
@@ -68,7 +68,7 @@
         <h2>How it works</h2>
         <ol class="steps">
           <li>Save a new macOS screen recording (`.mov`) to Desktop.</li>
-          <li>Folder Action receives the new file event and waits 5 seconds.</li>
+          <li>LaunchAgent receives Desktop file events via `WatchPaths`.</li>
           <li>`ffmpeg` creates `<name>_small.mp4` with `libx265` + `crf 28`.</li>
           <li>Original `.mov` moves to Trash only after a successful conversion.</li>
         </ol>
@@ -79,7 +79,7 @@
           <h3>One-time setup</h3>
           <p>
             Run `setup.command`. It installs Homebrew and `ffmpeg` if needed, then
-            installs `screen_recording_auto_compress.scpt` for Folder Actions.
+            installs and starts the LaunchAgent automatically.
           </p>
         </article>
         <article class="card">
@@ -111,7 +111,7 @@
           <details>
             <summary>Can I keep original files?</summary>
             <p>
-              Yes. Edit the worker shell script and remove the Finder delete line.
+              Yes. Edit the worker shell script and remove the move-to-trash block.
             </p>
           </details>
           <details>
