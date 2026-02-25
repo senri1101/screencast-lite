@@ -65,7 +65,7 @@ This is expected when conversion fails. The original file is deleted only after 
 ## Repository layout
 
 - `setup.command`: one-click dependency + workflow installer
-- `Screen Recording Auto Compress.workflow/Contents/document.wflow`: Automator workflow definition
+- `screen_recording_auto_compress.workflow/Contents/document.wflow`: Automator workflow definition
 - `docs/`: landing page (for GitHub Pages)
 
 ## License

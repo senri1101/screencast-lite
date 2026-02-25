@@ -30,7 +30,7 @@ else
     echo "ffmpeg is already installed."
 fi
 
-WORKFLOW_NAME="Screen Recording Auto Compress.workflow"
+WORKFLOW_NAME="screen_recording_auto_compress.workflow"
 DIR=$(cd "$(dirname "$0")" && pwd)
 
 if [ -d "$DIR/$WORKFLOW_NAME" ]; then
