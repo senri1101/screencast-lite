@@ -1,7 +1,7 @@
-#!/bin/zsh
+#!/bin/bash
 
 set -u
-setopt null_glob
+shopt -s nullglob
 
 WORKER_SCRIPT="$HOME/.screencast-lite/screen_recording_auto_compress.sh"
 DESKTOP_DIR="$HOME/Desktop"
@@ -12,7 +12,7 @@ fi
 
 jp_prefix=$'\xE7\x94\xBB\xE9\x9D\xA2\xE5\x8F\x8E\xE9\x8C\xB2'
 
-for f in "$DESKTOP_DIR"/*.mov(N); do
+for f in "$DESKTOP_DIR"/*.mov; do
   [ -f "$f" ] || continue
 
   filename=$(basename "$f")

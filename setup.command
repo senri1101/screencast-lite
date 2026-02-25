@@ -58,19 +58,21 @@ cp "$WORKER_SOURCE" "$WORKER_TARGET"
 cp "$SCAN_SOURCE" "$SCAN_TARGET"
 chmod +x "$WORKER_TARGET" "$SCAN_TARGET"
 
-python - "$PLIST_TEMPLATE" "$PLIST_TARGET" "$SCAN_TARGET" "$HOME/Desktop" "$LOG_PATH" "$ERR_LOG_PATH" <<'PY'
+python - "$PLIST_TEMPLATE" "$PLIST_TARGET" "$SCAN_TARGET" "$HOME" "$HOME/Desktop" "$LOG_PATH" "$ERR_LOG_PATH" <<'PY'
 import pathlib
 import sys
 
 src = pathlib.Path(sys.argv[1])
 out = pathlib.Path(sys.argv[2])
 scan = sys.argv[3]
-desktop = sys.argv[4]
-log = sys.argv[5]
-err = sys.argv[6]
+home = sys.argv[4]
+desktop = sys.argv[5]
+log = sys.argv[6]
+err = sys.argv[7]
 
 content = src.read_text(encoding="utf-8")
 content = content.replace("__SCAN_SCRIPT_PATH__", scan)
+content = content.replace("__HOME_PATH__", home)
 content = content.replace("__DESKTOP_PATH__", desktop)
 content = content.replace("__LOG_PATH__", log)
 content = content.replace("__ERR_LOG_PATH__", err)

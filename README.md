@@ -32,6 +32,8 @@ This project is built for non-engineering users: run one setup script, and a Lau
 3. Follow on-screen prompts.
 4. Setup installs and starts the LaunchAgent automatically.
 
+If you updated this repository after a previous install, run `setup.command` again to refresh the installed agent and scripts.
+
 ## Daily usage
 
 1. Record your screen using macOS built-in recording.
