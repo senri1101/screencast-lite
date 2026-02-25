@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>screencast-lite | Auto Compress macOS Screen Recordings</title>
+    <meta
+      name="description"
+      content="Automatically compress macOS screen recordings into smaller H.265 MP4 files with one setup script."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+    <header class="hero reveal">
+      <p class="eyebrow">macOS utility</p>
+      <h1>
+        Shrink huge screen recordings
+        <span>without extra clicks.</span>
+      </h1>
+      <p class="lead">
+        screencast-lite watches your Desktop, compresses new screen recordings to
+        H.265, and keeps only the lightweight output when conversion succeeds.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/senri1101/screencast-lite">View GitHub</a>
+        <a class="btn btn-ghost" href="https://github.com/senri1101/screencast-lite#quick-install">Install Guide</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section reveal">
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>Save a new macOS screen recording (`.mov`) to Desktop.</li>
+          <li>The Folder Action waits 5 seconds for write completion.</li>
+          <li>`ffmpeg` creates `<name>_small.mp4` with `libx265` + `crf 28`.</li>
+          <li>Original `.mov` moves to Trash only after a successful conversion.</li>
+        </ol>
+      </section>
+
+      <section class="section grid reveal">
+        <article class="card">
+          <h3>One-time setup</h3>
+          <p>
+            Run `setup.command`. It installs Homebrew and `ffmpeg` if needed, then
+            opens the workflow installer.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Safe by default</h3>
+          <p>
+            The source file is preserved on conversion failure. Deletion is
+            conditional on success.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Intel + Apple Silicon</h3>
+          <p>
+            The workflow supports both `/usr/local/bin` and `/opt/homebrew/bin`
+            execution paths.
+          </p>
+        </article>
+      </section>
+
+      <section class="section reveal">
+        <h2>FAQ</h2>
+        <div class="faq">
+          <details>
+            <summary>Does it support Japanese default recording names?</summary>
+            <p>
+              Yes. It handles the Japanese default prefix internally using Unicode
+              escape sequences.
+            </p>
+          </details>
+          <details>
+            <summary>Can I keep original files?</summary>
+            <p>
+              Yes. Edit the workflow script and remove the Finder delete line.
+            </p>
+          </details>
+          <details>
+            <summary>Where can I report issues?</summary>
+            <p>
+              Use the GitHub repository issue tracker.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer reveal">
+      <p>Built for simple sharing workflows on macOS.</p>
+      <p class="mono">(c) <span id="year"></span> screencast-lite</p>
+    </footer>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
