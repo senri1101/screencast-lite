@@ -42,6 +42,8 @@ FOLDER_ACTION_SOURCE="$APP_DIR/screen_recording_auto_compress_folder_action.appl
 SCAN_TARGET="$APP_DIR/scan_desktop_recordings.sh"
 LOG_PATH="$APP_DIR/launchd.log"
 ERR_LOG_PATH="$APP_DIR/launchd.err.log"
+DESKTOP_PATH="$HOME/Desktop"
+SCREENSHOTS_PATH="$HOME/Pictures/screenshots"
 
 LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
 PLIST_TARGET="$LAUNCH_AGENTS_DIR/io.github.senri1101.screencast-lite.plist"
@@ -58,7 +60,7 @@ if [ ! -f "$WORKER_SOURCE" ] || [ ! -f "$FOLDER_ACTION_TEMPLATE" ] || [ ! -f "$S
     exit 1
 fi
 
-mkdir -p "$APP_DIR" "$LAUNCH_AGENTS_DIR" "$FOLDER_ACTIONS_DIR"
+mkdir -p "$APP_DIR" "$LAUNCH_AGENTS_DIR" "$FOLDER_ACTIONS_DIR" "$SCREENSHOTS_PATH"
 cp "$WORKER_SOURCE" "$WORKER_TARGET"
 cp "$SCAN_SOURCE" "$SCAN_TARGET"
 chmod +x "$WORKER_TARGET" "$SCAN_TARGET"
@@ -78,7 +80,7 @@ PY
 
 osacompile -o "$FOLDER_ACTION_SCPT" "$FOLDER_ACTION_SOURCE"
 
-python - "$PLIST_TEMPLATE" "$PLIST_TARGET" "$SCAN_TARGET" "$HOME" "$HOME/Desktop" "$LOG_PATH" "$ERR_LOG_PATH" <<'PY'
+python - "$PLIST_TEMPLATE" "$PLIST_TARGET" "$SCAN_TARGET" "$HOME" "$DESKTOP_PATH" "$SCREENSHOTS_PATH" "$LOG_PATH" "$ERR_LOG_PATH" <<'PY'
 import pathlib
 import sys
 
@@ -87,13 +89,15 @@ out = pathlib.Path(sys.argv[2])
 scan = sys.argv[3]
 home = sys.argv[4]
 desktop = sys.argv[5]
-log = sys.argv[6]
-err = sys.argv[7]
+screenshots = sys.argv[6]
+log = sys.argv[7]
+err = sys.argv[8]
 
 content = src.read_text(encoding="utf-8")
 content = content.replace("__SCAN_SCRIPT_PATH__", scan)
 content = content.replace("__HOME_PATH__", home)
 content = content.replace("__DESKTOP_PATH__", desktop)
+content = content.replace("__SCREENSHOTS_PATH__", screenshots)
 content = content.replace("__LOG_PATH__", log)
 content = content.replace("__ERR_LOG_PATH__", err)
 out.write_text(content, encoding="utf-8")
@@ -121,14 +125,16 @@ echo "  - $APP_DIR/scanner.log"
 echo "  - $LOG_PATH"
 echo "  - $ERR_LOG_PATH"
 echo ""
-echo "LaunchAgent auto-compression is active for your Desktop."
+echo "LaunchAgent auto-compression is active for:"
+echo "  - $DESKTOP_PATH"
+echo "  - $SCREENSHOTS_PATH"
 echo ""
 echo "Opening Folder Actions Setup for compatibility mode..."
 open -a "Folder Actions Setup"
 echo ""
 echo "If LaunchAgent does not auto-compress on your macOS setup:"
 echo "  1) Enable Folder Actions."
-echo "  2) Add Desktop in the left panel."
+echo "  2) Add Desktop or Pictures/screenshots in the left panel."
 echo "  3) Attach screen_recording_auto_compress.scpt in the right panel."
 echo ""
 echo "========================================"

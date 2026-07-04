@@ -54,8 +54,8 @@
         <span>without extra clicks.</span>
       </h1>
       <p class="lead">
-        screencast-lite uses a LaunchAgent, compresses new Desktop recordings to
-        H.265, and includes a Folder Action compatibility mode for stricter
+        screencast-lite uses a LaunchAgent, compresses new recordings from
+        Desktop or Pictures/screenshots to H.265, and includes a Folder Action compatibility mode for stricter
         macOS permission setups.
       </p>
       <div class="cta-row">
@@ -68,8 +68,8 @@
       <section class="section reveal">
         <h2>How it works</h2>
         <ol class="steps">
-          <li>Save a new macOS screen recording (`.mov`) to Desktop.</li>
-          <li>LaunchAgent receives Desktop file events via `WatchPaths`.</li>
+          <li>Save a new macOS screen recording (`.mov`) to Desktop or Pictures/screenshots.</li>
+          <li>LaunchAgent receives watched-folder events via `WatchPaths`.</li>
           <li>`ffmpeg` creates `screen_recording_YYYYMMDD_HHMMSS_small.mp4` with `libx265` + `hvc1`.</li>
           <li>Original `.mov` moves to Trash only after a successful conversion.</li>
         </ol>
@@ -128,10 +128,10 @@
             </p>
           </details>
           <details>
-            <summary>What if LaunchAgent mode does not detect Desktop files?</summary>
+            <summary>What if LaunchAgent mode does not detect files?</summary>
             <p>
-              Attach `screen_recording_auto_compress.scpt` to Desktop in Folder
-              Actions Setup.
+              Attach `screen_recording_auto_compress.scpt` to the target folder in
+              Folder Actions Setup.
             </p>
           </details>
         </div>
